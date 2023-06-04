@@ -222,6 +222,7 @@ CREATE TABLE IF NOT EXISTS `voedselBank`.`klant_has_wens` (
 ENGINE = InnoDB;
 
 ALTER TABLE gebruiker MODIFY id_soortgebruiker INT NULL;
+ALTER TABLE gebruiker ADD gebruikersnaam VARCHAR(255) NOT NULL AFTER email;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
