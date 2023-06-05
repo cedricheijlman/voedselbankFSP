@@ -1,23 +1,27 @@
 <?php
+session_start();
+session_start();
+$_SESSION['registratieError'] =  "";
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
-  $gebruikersnaam = $_POST['gebruikersnaam'];
+  $email = $_POST['email'];
   $wachtwoord = $_POST['wachtwoord'];
 
   // Een PDO databaseverbinding maken
-  $host = 'localhost';
-  $dbname = 'voedselbank';
+  $host = '127.0.0.1';
+  $dbname = 'voedselBank';
   $username = 'root';
-  $password = '123456';
+  $password = '12345678';
+  $port = '3306';
 
   try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Gebruikersgegevens ophalen op basis van de gebruikersnaam
-    $stmt = $conn->prepare('SELECT id_gebruiker, wachtwoord FROM gebruiker WHERE gebruikersnaam = ?');
-    $stmt->execute([$gebruikersnaam]);
+    $stmt = $conn->prepare('SELECT id_gebruiker, wachtwoord FROM gebruiker WHERE email = ?');
+    $stmt->execute([$email]);
     $gebruiker = $stmt->fetch();
 
     if ($gebruiker && password_verify($wachtwoord, $gebruiker['wachtwoord'])) {
@@ -25,17 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['gebruikersnaam'] = $gebruikersnaam;
       $_SESSION['gebruiker_id'] = $gebruiker['id_gebruiker'];
 
-      header('Location: homepage.php'); // Gebruiker doorsturen naar homepage.php
+      echo 'login';
       exit;
     } else {
-      echo 'Ongeldige gebruikersnaam of wachtwoord';
-      echo '<br>';
-      echo '<a href="login.html">Klik hier om opnieuw in te loggen</a>';
-      exit;
+      $_SESSION['loginError'] =  'Ongeldige gebruikersnaam of wachtwoord';
     }
   } catch (PDOException $e) {
-    echo 'Inloggen mislukt<br>';
-    echo '<a href="login.html">Klik hier om opnieuw te proberen</a>';
+    $_SESSION['loginError'] =  'Inloggen mislukt, probeer opnieuw!';
   }
 
   // Databaseverbinding sluiten
@@ -68,13 +68,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="email" id="email" name="email" required />
         </div>
         <div class="formInput">
-          <label for="password">Wachtwoord</label>
-          <input type="password" id="password" name="password" required />
+          <label for="wachtwoord">Wachtwoord</label>
+          <input type="password" id="wachtwoord" name="wachtwoord" required />
         </div>
         <button type="submit" class="knop">Inloggen</button>
         <p class="wachtwoordVergeten">Wachtwoord vergeten?</p>
+        <p class="error"><?php echo $_SESSION['loginError'] ?></p>
       </form>
-
       <p class="geenAccount">
         Nog geen account?
         <span><a href="./registratie.html">Registreer</a></span>

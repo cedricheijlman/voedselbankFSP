@@ -1,7 +1,14 @@
 <?php
+session_start();
+$_SESSION['registratieError'] =  "";
+
+
+
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
+  $voornaam = $_POST['voornaam'];
+  $achternaam = $_POST['achternaam'];
   $gebruikersnaam = $_POST['gebruikersnaam'];
   $email = $_POST['email'];
   $wachtwoord = $_POST['wachtwoord'];
@@ -10,15 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $hashedPassword = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
   // Een PDO databaseverbinding maken
-  $host = 'localhost';
-  $dbname = 'voedselbank';
+  $host = '127.0.0.1';
+  $dbname = 'voedselBank';
   $username = 'root';
-  $password = '123456';
+  $password = '12345678';
+  $port = '3306';
 
+  $_SESSION['registratieError'] =  "";
 
 
   try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;port=$port", $username, $password);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Controleren of de gebruikersnaam of e-mail al in gebruik zijn
@@ -27,22 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $count = $stmt->fetchColumn();
 
     if ($count > 0) {
-      echo 'Gebruikersnaam of e-mail is al in gebruik';
-      echo '<br>';
-      echo '<a href="registratie.html">Klik hier om het opnieuw te proberen</a>';
-      exit;
+      $_SESSION['registratieError'] = 'Gebruikersnaam of e-mail is al in gebruik';
     }
 
     // Gegevens invoegen in de gebruikerstabel
-    $stmt = $pdo->prepare("INSERT INTO gebruiker (gebruikersnaam, email, wachtwoord) VALUES (?, ?, ?)");
-    $stmt->execute([$gebruikersnaam, $email, $hashedPassword]);
-
-    echo 'Registratie succesvol';
-    header('Location: homepage.php'); // Gebruiker doorsturen naar homepage.php
-    exit;
+    if ($_SESSION['registratieError'] == "") {
+      $stmt = $conn->prepare('INSERT INTO gebruiker (naam, achternaam, gebruikersnaam, email, wachtwoord) VALUES (?, ?, ?, ?, ?)');
+      $stmt->execute([$voornaam, $achternaam, $gebruikersnaam, $email, $hashedPassword]);
+    };
   } catch (PDOException $e) {
-    echo 'Registratie mislukt<br>';
-    echo '<a href="registratie.html">Klik hier om het opnieuw te proberen</a>';
+    $_SESSION['registratieErrror'] = 'Registratie mislukt';
   }
 
   // Databaseverbinding sluiten
@@ -66,8 +69,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="links">
       <h1 class="applicatieNaam">Applicatie Naam</h1>
 
-      <form class="form" action="registratie.php" method="POST">
+      <form class="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <h2 class="formTitel">Maak een account</h2>
+        <div class="formInput">
+          <label for="voornaam">Voornaam</label>
+          <input type="text" id="voornaam" name="voornaam" required />
+        </div>
+        <div class="formInput">
+          <label for="achternaam">Achternaam</label>
+          <input type="text" id="achternaam" name="achternaam" required />
+        </div>
         <div class="formInput">
           <label for="gebruikersnaam">Gebruikersnaam</label>
           <input type="text" id="gebruikersnaam" name="gebruikersnaam" required />
@@ -81,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <input type="password" id="wachtwoord" name="wachtwoord" minlength="8" required />
         </div>
         <button type="submit" class="knop">Registreren</button>
+        <?php echo '<p class="error">' . $_SESSION['registratieError'] . '</p>';  ?>
       </form>
 
       <p class="geenAccount">

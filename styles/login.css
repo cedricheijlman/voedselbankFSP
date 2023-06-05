@@ -83,6 +83,11 @@
   margin-top: 10px;
 }
 
+.error {
+  color: red !important;
+  margin-top: 10px !important;
+}
+
 @media (max-width: 768px) {
   .rechts {
     display: none;

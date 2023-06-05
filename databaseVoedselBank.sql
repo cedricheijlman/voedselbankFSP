@@ -19,7 +19,6 @@ CREATE SCHEMA IF NOT EXISTS `voedselBank` DEFAULT CHARACTER SET utf8 ;
 -- -----------------------------------------------------
 -- Schema voedselbank
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `voedselbank` DEFAULT CHARACTER SET utf8mb3 ;
 USE `voedselBank` ;
 
 -- -----------------------------------------------------
