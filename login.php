@@ -1,7 +1,7 @@
 <?php
 session_start();
 session_start();
-$_SESSION['registratieError'] =  "";
+$_SESSION['loginError'] =  "";
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </form>
       <p class="geenAccount">
         Nog geen account?
-        <span><a href="./registratie.html">Registreer</a></span>
+        <span><a href="./registratie.php">Registreer</a></span>
       </p>
     </div>
     <div class="rechts"></div>

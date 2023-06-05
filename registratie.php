@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </form>
 
       <p class="geenAccount">
-        Al een account? <span><a href="./login.html">Inloggen</a></span>
+        Al een account? <span><a href="./login.php">Inloggen</a></span>
       </p>
     </div>
     <div class="rechts"></div>
