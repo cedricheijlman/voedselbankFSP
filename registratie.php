@@ -44,6 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt = $conn->prepare('INSERT INTO gebruiker (naam, achternaam, gebruikersnaam, email, wachtwoord) VALUES (?, ?, ?, ?, ?)');
       $stmt->execute([$voornaam, $achternaam, $gebruikersnaam, $email, $hashedPassword]);
     };
+    header('Location: homepage.html');
+    exit;
   } catch (PDOException $e) {
     $_SESSION['registratieErrror'] = 'Registratie mislukt';
   }

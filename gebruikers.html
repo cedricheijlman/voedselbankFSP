@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="./styles/productvoorraad.css" />
-    <link rel="stylesheet" href="./styles/navbar.css" />
     <link rel="stylesheet" href="./styles/layout.css" />
+    <link rel="stylesheet" href="./styles/navbar.css" />
+    <link rel="stylesheet" href="./styles/gebruikers.css" />
 
     <link
       rel="stylesheet"
@@ -30,14 +29,14 @@
               <i class="fa-solid fa-house"></i>
               <p>Home</p>
             </li>
-            <li onclick="location.href = 'gebruikers.html'">
-              <i class="fa-solid fa-user-group"></i>
+            <li class="selected">
+              <i
+                class="fa-solid fa-user-group"
+                onclick="location.href = 'gebruikers.html'"
+              ></i>
               <p>Gebruikers</p>
             </li>
-            <li
-              onclick="location.href = 'productvoorraad.html'"
-              class="selected"
-            >
+            <li onclick="location.href = 'productvoorraad.html'">
               <i class="fa-solid fa-shop"></i>
               <p>Productvoorraad</p>
             </li>
@@ -70,41 +69,52 @@
       </div>
       <div class="rechts">
         <div class="headerContainer">
-          <h2>Productvoorraad</h2>
-          <a href="./voegproduct.html">Voeg product toe</a>
+          <h2>Gebruikers</h2>
+          <a href="./voegproduct.html">Voeg gebruiker toe</a>
         </div>
         <input
           type="text"
           class="zoekInput"
           id="searchInput"
-          placeholder="Zoek op streepjescode"
+          placeholder="Zoek op gebruikersnaam"
           onkeyup="searchProduct()"
         />
-
         <table id="productTable">
           <thead>
             <tr>
               <th onclick="sortTable(0)" data-column-index="0">
-                Streepjescode<span class="sort-indicator"></span>
+                ID<span class="sort-indicator"></span>
+              </th>
+              <th onclick="sortTable(0)" data-column-index="0">
+                Naam<span class="sort-indicator"></span>
               </th>
               <th onclick="sortTable(1)" data-column-index="1">
-                Productnaam<span class="sort-indicator"></span>
+                Achternaam<span class="sort-indicator"></span>
+              </th>
+              <th onclick="sortTable(1)" data-column-index="1">
+                Gebruikersnaam<span class="sort-indicator"></span>
               </th>
               <th onclick="sortTable(2)" data-column-index="2">
-                Categorie<span class="sort-indicator"></span>
+                Emailadres<span class="sort-indicator"></span>
               </th>
               <th onclick="sortTable(3)" data-column-index="3">
-                Aantal in voorraad<span class="sort-indicator"></span>
+                Soort Gebruiker<span class="sort-indicator"></span>
+              </th>
+              <th onclick="sortTable(3)" data-column-index="3">
+                Site Toegang<span class="sort-indicator"></span>
               </th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>12345</td>
-              <td>Product A</td>
-              <td>Categorie 1</td>
-              <td>10</td>
+              <td>1</td>
+              <td>Cedric</td>
+              <td>Heijlman</td>
+              <td>cedric1234</td>
+              <td>cjy.heijlman@gmail.com</td>
+              <td>Directeur</td>
+              <td>Ja</td>
               <td class="actions">
                 <a href="#" onclick="editProduct(0)"
                   ><i class="fa-solid fa-pen-to-square"></i
@@ -115,10 +125,13 @@
               </td>
             </tr>
             <tr>
-              <td>67890</td>
-              <td>Product B</td>
-              <td>Categorie 2</td>
-              <td>5</td>
+              <td>2</td>
+              <td>Storm</td>
+              <td>Leeuwin</td>
+              <td>storm1234</td>
+              <td>storm.leeuwin@gmail.com</td>
+              <td>Directeur</td>
+              <td>Ja</td>
               <td class="actions">
                 <a href="#" onclick="editProduct(1)"
                   ><i class="fa-solid fa-pen-to-square"></i
@@ -129,10 +142,13 @@
               </td>
             </tr>
             <tr>
-              <td>54321</td>
-              <td>Product C</td>
-              <td>Categorie 1</td>
-              <td>8</td>
+              <td>3</td>
+              <td>Jair</td>
+              <td>Atjak</td>
+              <td>jair333</td>
+              <td>Jair.atjak@gmail.com</td>
+              <td>Vrijwilliger</td>
+              <td>Ja</td>
               <td class="actions">
                 <a href="#" onclick="editProduct(2)"
                   ><i class="fa-solid fa-pen-to-square"></i
@@ -143,10 +159,13 @@
               </td>
             </tr>
             <tr>
-              <td>98765</td>
-              <td>Product D</td>
-              <td>Categorie 3</td>
-              <td>12</td>
+              <td>4</td>
+              <td>Lionel</td>
+              <td>Messi</td>
+              <td>Messi4444</td>
+              <td>lionelmessi@gmail.com</td>
+              <td>Magazijnmedewerker</td>
+              <td>Ja</td>
               <td class="actions">
                 <a href="#" onclick="editProduct(3)"
                   ><i class="fa-solid fa-pen-to-square"></i
@@ -158,8 +177,6 @@
             </tr>
           </tbody>
         </table>
-
-        <script src="script.js"></script>
       </div>
     </div>
   </body>

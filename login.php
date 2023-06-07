@@ -25,11 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gebruiker = $stmt->fetch();
 
     if ($gebruiker && password_verify($wachtwoord, $gebruiker['wachtwoord'])) {
-      // Inloggen is gelukt, sla gebruikersnaam en id op in de sessie
-      $_SESSION['gebruikersnaam'] = $gebruikersnaam;
-      $_SESSION['gebruiker_id'] = $gebruiker['id_gebruiker'];
-
-      echo 'login';
+      // Inloggen is gelukt\
+      header('Location: homepage.html');
       exit;
     } else {
       $_SESSION['loginError'] =  'Ongeldige gebruikersnaam of wachtwoord';
