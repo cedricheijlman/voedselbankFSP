@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  color: white !important;
+  font-family: "Poppins";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.rechts {
+  background-color: #161616;
+  width: 80%;
+  padding: 90px 80px;
+}

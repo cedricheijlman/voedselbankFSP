@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="stylesheet" href="./styles/voegproduct.css" />
+    <link rel="stylesheet" href="./styles/navbar.css" />
+    <link rel="stylesheet" href="./styles/layout.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="navbar">
+        <h2>Maaskantje Paneel</h2>
+        <div class="navbarListContainer">
+          <ul>
+            <li>
+              <i class="fa-solid fa-house"></i>
+              <p>Home</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-user-group"></i>
+              <p>Gebruikers</p>
+            </li>
+            <li class="selected">
+              <i class="fa-solid fa-shop"></i>
+              <p>Productvoorraad</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>Voedselpakketten</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-users"></i>
+              <p>Klanten</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-truck-field"></i>
+              <p>Leveranciers</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-chart-simple"></i>
+              <p>Maand Overzicht</p>
+            </li>
+            <li>
+              <i class="fa-regular fa-circle-user"></i>
+              <p>Account</p>
+            </li>
+          </ul>
+        </div>
+        <div class="uitlogContainer">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <p>Uitloggen</p>
+        </div>
+      </div>
+      <div class="rechts">
+        <h2>Voeg Product Toe</h2>
+        <form>
+          <p>Product Informatie</p>
+          <input placeholder="Streepjescode" type="number" />
+
+          <input placeholder="Productnaam" />
+          <select>
+            <option>Aardappelen, groente, fruit</option>
+            <option>Kaas, vleeswaren</option>
+            <option>Zuivel, plantaardig en eieren</option>
+            <option>Bakkerij en banket</option>
+            <option>Frisdrank, sappen, koffie en thee</option>
+            <option>Pasta, rijst en wereldkeuken</option>
+            <option>Snoep, koek, chips en chocolade</option>
+            <option>Baby, verzorging en hygiene</option>
+          </select>
+          <input placeholder="Voorraad" type="number" />
+          <div class="formButtons">
+            <button id="cancelKnop">
+              <a href="productvoorraad.html">Cancel</a>
+            </button>
+            <button id="voegKnop" type="submit">Voeg Product</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
