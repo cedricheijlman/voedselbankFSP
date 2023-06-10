@@ -1,7 +1,7 @@
 <?php
 // MySQL database configuration
 $host = '127.0.0.1';
-$dbname = 'voedselBank';
+$dbname = 'voedselbank';
 $username = 'root';
 $password = '12345678';
 $port = '3306';
@@ -12,9 +12,7 @@ try {
   $pdo = new PDO($dsn, $username, $password);
 
   // Query to retrieve all rows from the "gebruiker" table
-  $sql = "SELECT gebruiker.*, soortgebruiker.soortgebruiker
-  FROM gebruiker
-  JOIN soortgebruiker ON gebruiker.id_soortgebruiker = soortgebruiker.id";
+  $sql = "SELECT * FROM product";
   // Execute the query and fetch all rows
   $result = $pdo->query($sql);
   $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -23,16 +21,16 @@ try {
 }
 ?>
 
-
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="./styles/layout.css" />
+  <link rel="stylesheet" href="./styles/productvoorraad.css" />
   <link rel="stylesheet" href="./styles/navbar.css" />
-  <link rel="stylesheet" href="./styles/gebruikers.css" />
+  <link rel="stylesheet" href="./styles/layout.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -47,15 +45,15 @@ try {
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
         <ul>
-          <li onclick="location.href = 'homepage.html'">
+          <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-          <li class="selected">
-            <i class="fa-solid fa-user-group" onclick="location.href = 'gebruikers.php'"></i>
+          <li onclick="location.href = 'gebruikers.php'">
+            <i class="fa-solid fa-user-group"></i>
             <p>Gebruikers</p>
           </li>
-          <li onclick="location.href = 'productvoorraad.php'">
+          <li onclick="location.href = 'productvoorraad.php'" class="selected">
             <i class="fa-solid fa-shop"></i>
             <p>Productvoorraad</p>
           </li>
@@ -88,33 +86,25 @@ try {
     </div>
     <div class="rechts">
       <div class="headerContainer">
-        <h2>Gebruikers</h2>
-        <a href="./voeggebruiker.php">Voeg gebruiker toe</a>
+        <h2>Productvoorraad</h2>
+        <a href="./voegproduct.php">Voeg product toe</a>
       </div>
-      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op gebruikersnaam" onkeyup="searchGebruiker()" />
+      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op streepjescode" onkeyup="searchProduct()" />
+
       <table id="productTable">
         <thead>
           <tr>
             <th onclick="sortTable(0)" data-column-index="0">
-              ID<span class="sort-indicator"></span>
+              Streepjescode<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(1)" data-column-index="1">
-              Naam<span class="sort-indicator"></span>
+              Productnaam<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(2)" data-column-index="2">
-              Achternaam<span class="sort-indicator"></span>
+              Categorie<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(3)" data-column-index="3">
-              Gebruikersnaam<span class="sort-indicator"></span>
-            </th>
-            <th onclick="sortTable(4)" data-column-index="4">
-              Emailadres<span class="sort-indicator"></span>
-            </th>
-            <th onclick="sortTable(5)" data-column-index="5">
-              Soort Gebruiker<span class="sort-indicator"></span>
-            </th>
-            <th onclick="sortTable(6)" data-column-index="6">
-              Site Toegang<span class="sort-indicator"></span>
+              Aantal in voorraad<span class="sort-indicator"></span>
             </th>
             <th>Action</th>
           </tr>
@@ -123,18 +113,11 @@ try {
           <?php if (!empty($rows)) : ?>
             <?php foreach ($rows as $row) : ?>
               <tr>
-                <td><?php echo $row['id_gebruiker']; ?></td>
+                <td><?php echo $row['streepjescode']; ?></td>
                 <td><?php echo $row['naam']; ?></td>
-                <td><?php echo $row['achternaam']; ?></td>
-                <td><?php echo $row['gebruikersnaam']; ?></td>
-                <td><?php echo $row['email']; ?></td>
-                <td><?php echo $row['soortgebruiker']; ?></td>
-                <td><?php if ($row['toegang'] == 1) {
-                      echo 'Ja';
-                    } elseif ($row['toegang'] == 0) {
-                      echo 'Nee';
-                    }
-                    ?></td>
+                <td><?php echo $row['categorie_id']; ?></td>
+                <td><?php echo $row['aantal']; ?></td>
+
                 <td class="actions">
                   <a href="#" onclick="editProduct(0)"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a href="#" onclick="deleteProduct(0)"><i class="fa-solid fa-trash"></i></a>
@@ -146,14 +129,12 @@ try {
           <?php endif; ?>
 
 
-
-
         </tbody>
       </table>
+
+      <script src="script.js"></script>
     </div>
   </div>
-  <script src="script.js"></script>
-
 </body>
 
 </html>

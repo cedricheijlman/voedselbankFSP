@@ -1,22 +1,16 @@
 <?php
 session_start();
-$_SESSION['gebruikerAanmaken'] =  "";
-
+$_SESSION['productToevoegenError'] =  "";
 
 
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
-  $voornaam = $_POST['voornaam'];
-  $achternaam = $_POST['achternaam'];
-  $gebruikersnaam = $_POST['gebruikersnaam'];
-  $email = $_POST['email'];
-  $wachtwoord = $_POST['wachtwoord'];
-  $soortgebruiker = $_POST['soortgebruiker'];
-  $toegang = $_POST['toegang'];
+  $streepjescode = $_POST['streepjescode'];
+  $productnaam = $_POST['productnaam'];
+  $categorie = $_POST['categorie'];
+  $aantal = $_POST['aantal'];
 
-  // Wachtwoord hashen
-  $hashedPassword = password_hash($wachtwoord, PASSWORD_DEFAULT);
 
   // Een PDO databaseverbinding maken
   $host = '127.0.0.1';
@@ -25,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $password = '12345678';
   $port = '3306';
 
-  $_SESSION['registratieError'] =  "";
+  $_SESSION['productgToevoegenError'] =  "";
 
 
   try {
@@ -33,19 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Controleren of de gebruikersnaam of e-mail al in gebruik zijn
-    $stmt = $conn->prepare('SELECT COUNT(*) FROM gebruiker WHERE gebruikersnaam = ? OR email = ?');
-    $stmt->execute([$gebruikersnaam, $email]);
+    $stmt = $conn->prepare('SELECT COUNT(*) FROM product WHERE streepjescode = ?');
+    $stmt->execute([$streepjescode]);
     $count = $stmt->fetchColumn();
 
     if ($count > 0) {
-      $_SESSION['registratieError'] = 'Gebruikersnaam of e-mail is al in gebruik';
+      $_SESSION['productToevoegenError'] = 'Product/Streepjescode bestaat al';
     }
 
     // Gegevens invoegen in de gebruikerstabel
-    if ($_SESSION['registratieError'] == "") {
-      $stmt = $conn->prepare('INSERT INTO gebruiker (naam, achternaam, gebruikersnaam, email, wachtwoord, id_soortgebruiker, toegang) VALUES (?, ?, ?, ?, ?, ?, ?)');
-      $stmt->execute([$voornaam, $achternaam, $gebruikersnaam, $email, $hashedPassword, $soortgebruiker, $toegang]);
-      header('Location: homepage.html');
+    if ($_SESSION['productToevoegenError'] == "") {
+      $stmt = $conn->prepare('INSERT INTO product (streepjescode, categorie_id, naam, aantal) VALUES (?, ?, ?, ?)');
+      $stmt->execute([$streepjescode, $categorie, $productnaam, $aantal]);
     };
   } catch (PDOException $e) {
     $_SESSION['registratieErrror'] = 'Registratie mislukt';
@@ -78,15 +71,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
         <ul>
-          <li onclick="location.href = 'homepage.html'">
+          <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-          <li class="selected" onclick="location.href = 'gebruikers.php'">
+          <li onclick="location.href = 'gebruikers.php'">
             <i class="fa-solid fa-user-group"></i>
             <p>Gebruikers</p>
           </li>
-          <li onclick="location.href = 'productvoorraad.php'">
+          <li onclick="location.href = 'productvoorraad.php'" class="selected">
             <i class="fa-solid fa-shop"></i>
             <p>Productvoorraad</p>
           </li>
@@ -118,32 +111,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
     <div class="rechts">
-      <h2>Voeg Gebruiker Toe</h2>
+      <h2>Voeg Product Toe</h2>
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <p>Gebruiker Informatie</p>
-        <input placeholder=" Naam" name="voornaam" type="text" required />
-        <input placeholder="Achternaam" name="achternaam" type="text" required />
-        <input placeholder="Gebruikersnaam" name="gebruikersnaam" type="text" required />
-        <input placeholder="Email" name="email" type="email" required />
-        <input placeholder="Wachtwoord" type="password" pattern=".{8,}" minlength="8" name="wachtwoord" required />
-        <label>Soort gebruiker</label>
+        <p>Product Informatie</p>
+        <input placeholder="Streepjescode" type="number" name="streepjescode" />
 
-        <select name="soortgebruiker">
-          <option value="3">Vrijwilliger</option>
-          <option value="2">Magazijnmedewerker</option>
-          <option value="1">Directeur</option>
+        <input placeholder="Productnaam" name="productnaam" />
+        <select name="categorie">
+          <option value="1">Aardappelen, groente, fruit</option>
+          <option value="2">Kaas, vleeswaren</option>
+          <option value="3">Zuivel, plantaardig en eieren</option>
+          <option value="4">Bakkerij en banket</option>
+          <option value="5">Frisdrank, sappen, koffie en thee</option>
+          <option value="6">Pasta, rijst en wereldkeuken</option>
+          <option value="7">Snoep, koek, chips en chocolade</option>
+          <option value="8">Baby, verzorging en hygiene</option>
         </select>
-        <label>Toegang?</label>
-
-        <select name="toegang">
-          <option value="1">Ja</option>
-          <option value="0">Nee</option>
-        </select>
+        <input placeholder="Voorraad" type="number" name="aantal" />
         <div class="formButtons">
           <button id="cancelKnop">
-            <a href="gebruikers.php">Cancel</a>
+            <a href="productvoorraad.php">Cancel</a>
           </button>
-          <button id="voegKnop" type="submit">Voeg Gebruiker</button>
+          <button id="voegKnop" type="submit">Voeg Product</button>
         </div>
       </form>
     </div>

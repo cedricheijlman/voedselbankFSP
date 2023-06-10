@@ -1,9 +1,9 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 session_start();
 $_SESSION['registratieError'] =  "";
-
-
-
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Een PDO databaseverbinding maken
   $host = '127.0.0.1';
-  $dbname = 'voedselBank';
+  $dbname = 'voedselbank';
   $username = 'root';
   $password = '12345678';
   $port = '3306';
