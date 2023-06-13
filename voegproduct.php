@@ -2,6 +2,7 @@
 session_start();
 $_SESSION['productToevoegenError'] =  "";
 
+require_once 'credentials.php';
 
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,13 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $categorie = $_POST['categorie'];
   $aantal = $_POST['aantal'];
 
-
-  // Een PDO databaseverbinding maken
-  $host = '127.0.0.1';
-  $dbname = 'voedselbank';
-  $username = 'root';
-  $password = '12345678';
-  $port = '3306';
 
   $_SESSION['productgToevoegenError'] =  "";
 
@@ -39,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_SESSION['productToevoegenError'] == "") {
       $stmt = $conn->prepare('INSERT INTO product (streepjescode, categorie_id, naam, aantal) VALUES (?, ?, ?, ?)');
       $stmt->execute([$streepjescode, $categorie, $productnaam, $aantal]);
+      header('Location: productvoorraad.php');
     };
   } catch (PDOException $e) {
     $_SESSION['registratieErrror'] = 'Registratie mislukt';

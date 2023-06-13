@@ -1,10 +1,7 @@
 <?php
 // MySQL database configuration
-$host = '127.0.0.1';
-$dbname = 'voedselBank';
-$username = 'root';
-$password = '12345678';
-$port = '3306';
+require_once 'credentials.php';
+
 
 try {
   // Create a PDO connection
@@ -75,7 +72,7 @@ try {
             <i class="fa-solid fa-chart-simple"></i>
             <p>Maand Overzicht</p>
           </li>
-          <li>
+          <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
           </li>

@@ -2,6 +2,7 @@
 session_start();
 $_SESSION['gebruikerAanmaken'] =  "";
 
+require_once 'credentials.php';
 
 
 // Controleren of het formulier is ingediend
@@ -17,13 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   // Wachtwoord hashen
   $hashedPassword = password_hash($wachtwoord, PASSWORD_DEFAULT);
-
-  // Een PDO databaseverbinding maken
-  $host = '127.0.0.1';
-  $dbname = 'voedselbank';
-  $username = 'root';
-  $password = '12345678';
-  $port = '3306';
 
   $_SESSION['registratieError'] =  "";
 
@@ -45,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($_SESSION['registratieError'] == "") {
       $stmt = $conn->prepare('INSERT INTO gebruiker (naam, achternaam, gebruikersnaam, email, wachtwoord, id_soortgebruiker, toegang) VALUES (?, ?, ?, ?, ?, ?, ?)');
       $stmt->execute([$voornaam, $achternaam, $gebruikersnaam, $email, $hashedPassword, $soortgebruiker, $toegang]);
-      header('Location: homepage.html');
+      header('Location: gebruikers.php');
     };
   } catch (PDOException $e) {
     $_SESSION['registratieErrror'] = 'Registratie mislukt';

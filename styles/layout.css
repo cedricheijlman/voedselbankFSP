@@ -4,6 +4,7 @@
   height: 100vh;
   color: white !important;
   font-family: "Poppins";
+  position: relative;
 }
 
 * {
