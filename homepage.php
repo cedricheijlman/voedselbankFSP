@@ -25,7 +25,7 @@ session_start()
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
         <ul>
-          <li onclick="location.href = 'homepage.html'" class="selected">
+          <li onclick="location.href = 'homepage.php'" class="selected">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
@@ -45,7 +45,7 @@ session_start()
             <i class="fa-solid fa-users"></i>
             <p>Klanten</p>
           </li>
-          <li>
+          <li onclick="location.href = 'leveranciers.php'">
             <i class="fa-solid fa-truck-field"></i>
             <p>Leveranciers</p>
           </li>

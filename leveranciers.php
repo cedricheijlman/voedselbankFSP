@@ -2,13 +2,15 @@
 // MySQL database configuration
 require_once 'credentials.php';
 
+
 try {
   // Create a PDO connection
   $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
   $pdo = new PDO($dsn, $username, $password);
 
   // Query to retrieve all rows from the "gebruiker" table
-  $sql = "SELECT product.*, categorie.categorie FROM product JOIN categorie ON product.categorie_id = categorie.id_categorie";
+  $sql = "SELECT *
+  FROM leverancier";
   // Execute the query and fetch all rows
   $result = $pdo->query($sql);
   $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -17,16 +19,16 @@ try {
 }
 ?>
 
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="./styles/productvoorraad.css" />
-  <link rel="stylesheet" href="./styles/navbar.css" />
   <link rel="stylesheet" href="./styles/layout.css" />
+  <link rel="stylesheet" href="./styles/navbar.css" />
+  <link rel="stylesheet" href="./styles/gebruikers.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -49,7 +51,7 @@ try {
             <i class="fa-solid fa-user-group"></i>
             <p>Gebruikers</p>
           </li>
-          <li onclick="location.href = 'productvoorraad.php'" class="selected">
+          <li onclick="location.href = 'productvoorraad.php'">
             <i class="fa-solid fa-shop"></i>
             <p>Productvoorraad</p>
           </li>
@@ -61,7 +63,7 @@ try {
             <i class="fa-solid fa-users"></i>
             <p>Klanten</p>
           </li>
-          <li onclick="location.href = 'leveranciers.php'">
+          <li onclick="location.href = 'leveranciers.php'" class="selected">
             <i class="fa-solid fa-truck-field"></i>
             <p>Leveranciers</p>
           </li>
@@ -69,7 +71,7 @@ try {
             <i class="fa-solid fa-chart-simple"></i>
             <p>Maand Overzicht</p>
           </li>
-          <li>
+          <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
           </li>
@@ -82,25 +84,33 @@ try {
     </div>
     <div class="rechts">
       <div class="headerContainer">
-        <h2>Productvoorraad</h2>
-        <a href="./voegproduct.php">Voeg product toe</a>
+        <h2>Leveranciers</h2>
+        <a href="./voeggebruiker.php">Voeg leverancier toe</a>
       </div>
-      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op streepjescode" onkeyup="searchProduct()" />
-
+      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op bedrijfsnaam" onkeyup="searchGebruiker()" />
       <table id="productTable">
         <thead>
           <tr>
             <th onclick="sortTable(0)" data-column-index="0">
-              Streepjescode<span class="sort-indicator"></span>
+              ID<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(1)" data-column-index="1">
-              Productnaam<span class="sort-indicator"></span>
+              Bedrijfsnaam<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(2)" data-column-index="2">
-              Categorie<span class="sort-indicator"></span>
+              Postcode<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(3)" data-column-index="3">
-              Aantal in voorraad<span class="sort-indicator"></span>
+              Huisnummer<span class="sort-indicator"></span>
+            </th>
+            <th onclick="sortTable(4)" data-column-index="4">
+              Plaats<span class="sort-indicator"></span>
+            </th>
+            <th onclick="sortTable(5)" data-column-index="5">
+              Email<span class="sort-indicator"></span>
+            </th>
+            <th onclick="sortTable(6)" data-column-index="6">
+              Telefoon<span class="sort-indicator"></span>
             </th>
             <th>Action</th>
           </tr>
@@ -109,13 +119,15 @@ try {
           <?php if (!empty($rows)) : ?>
             <?php foreach ($rows as $row) : ?>
               <tr>
-                <td><?php echo $row['streepjescode']; ?></td>
-                <td><?php echo $row['naam']; ?></td>
-                <td><?php echo $row['categorie']; ?></td>
-                <td><?php echo $row['aantal']; ?></td>
-
+                <td><?php echo $row['id_leverancier']; ?></td>
+                <td><?php echo $row['bedrijfsnaam']; ?></td>
+                <td><?php echo $row['postcode']; ?></td>
+                <td><?php echo $row['huisnummer']; ?></td>
+                <td><?php echo $row['plaats']; ?></td>
+                <td><?php echo $row['email']; ?></td>
+                <td><?php echo $row['telefoon']; ?></td>
                 <td class="actions">
-                  <a href="wijzigproduct.php?streepjescode=<?php echo $row['streepjescode'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a href="#" onclick="editProduct(0)"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a href="#" onclick="deleteProduct(0)"><i class="fa-solid fa-trash"></i></a>
                 </td>
               </tr>
@@ -125,12 +137,14 @@ try {
           <?php endif; ?>
 
 
+
+
         </tbody>
       </table>
-
-      <script src="script.js"></script>
     </div>
   </div>
+  <script src="script.js"></script>
+
 </body>
 
 </html>

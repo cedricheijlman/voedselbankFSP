@@ -1,8 +1,29 @@
 <?php
 session_start();
-$_SESSION['productToevoegenError'] =  "";
-
 require_once 'credentials.php';
+
+$streepjescode = $_GET['streepjescode'];
+
+
+$conn = new PDO("mysql:host=$host;dbname=$dbname;port=$port", $username, $password);
+$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+// Check voor info product
+$stmtCheck = $conn->prepare('SELECT * FROM product WHERE streepjescode = ?');
+$stmtCheck->execute([$streepjescode]);
+$product = $stmtCheck->fetch(PDO::FETCH_ASSOC);
+
+// Toegang tot de gegevens
+if ($product) {
+  $streepjescode = $product['streepjescode'];
+  $productnaam = $product['naam'];
+  $categorie = $product['categorie_id'];
+  $aantal = $product['aantal'];
+} else {
+  // Behandel het geval wanneer er geen product wordt gevonden met de gegeven streepjescode
+  header("Location: productvoorraad.php");
+}
+
 
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,30 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $aantal = $_POST['aantal'];
 
 
-  $_SESSION['productgToevoegenError'] =  "";
-
-
   try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;port=$port", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // Controleren of de gebruikersnaam of e-mail al in gebruik zijn
-    $stmt = $conn->prepare('SELECT COUNT(*) FROM product WHERE streepjescode = ?');
-    $stmt->execute([$streepjescode]);
-    $count = $stmt->fetchColumn();
-
-    if ($count > 0) {
-      $_SESSION['productToevoegenError'] = 'Product/Streepjescode bestaat al';
-    }
 
     // Gegevens invoegen in de gebruikerstabel
-    if ($_SESSION['productToevoegenError'] == "") {
-      $stmt = $conn->prepare('INSERT INTO product (streepjescode, categorie_id, naam, aantal) VALUES (?, ?, ?, ?)');
-      $stmt->execute([$streepjescode, $categorie, $productnaam, $aantal]);
-      header('Location: productvoorraad.php');
-    };
+
+    $stmt = $conn->prepare('UPDATE product SET aantal = ?, categorie_id = ? WHERE streepjescode = ?');
+    $stmt->execute([$aantal, $categorie, $streepjescode]);
+    header("Location: productvoorraad.php");
   } catch (PDOException $e) {
     $_SESSION['registratieErrror'] = 'Registratie mislukt';
+    echo  $e;
+    exit;
   }
 
   // Databaseverbinding sluiten
@@ -106,13 +114,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
     <div class="rechts">
-      <h2>Voeg Product Toe</h2>
-      <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <p>Product Informatie</p>
-        <input placeholder="Streepjescode" type="number" name="streepjescode" />
-
-        <input placeholder="Productnaam" name="productnaam" />
-        <select name="categorie">
+      <h2>Wijzig Product</h2>
+      <form action="<?php echo 'wijzigproduct.php?streepjescode=' . $streepjescode; ?>" method="POST">
+        <p>Streepjescode</p>
+        <input readonly value="<?php echo $streepjescode ?>" placeholder="Streepjescode" type="number" name="streepjescode" />
+        <p>Product Naam</p>
+        <input readonly placeholder="Productnaam" required value="<?php echo $productnaam ?>" name="productnaam" />
+        <p>Product Categorie</p>
+        <select name="categorie" required value="<?php echo $categorie ?>">
           <option value="1">Aardappelen, groente, fruit</option>
           <option value="2">Kaas, vleeswaren</option>
           <option value="3">Zuivel, plantaardig en eieren</option>
@@ -122,12 +131,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <option value="7">Snoep, koek, chips en chocolade</option>
           <option value="8">Baby, verzorging en hygiene</option>
         </select>
-        <input placeholder="Voorraad" type="number" name="aantal" />
+        <p>Aantal in voorrraad</p>
+        <input placeholder="Voorraad" required type="number" value="<?php echo $aantal ?>" name="aantal" />
         <div class="formButtons">
           <button id="cancelKnop">
             <a href="productvoorraad.php">Cancel</a>
           </button>
-          <button id="voegKnop" type="submit">Voeg Product</button>
+          <button id="voegKnop" type="submit">Wijzig Product</button>
         </div>
       </form>
     </div>

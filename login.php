@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($gebruiker && password_verify($wachtwoord, $gebruiker['wachtwoord'])) {
       // Inloggen is gelukt\
-      header('Location: homepage.html');
+      header('Location: homepage.php');
       exit;
     } else {
       $_SESSION['loginError'] =  'Ongeldige gebruikersnaam of wachtwoord';

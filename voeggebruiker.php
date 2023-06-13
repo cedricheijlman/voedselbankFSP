@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
         <ul>
-          <li onclick="location.href = 'homepage.html'">
+          <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="fa-solid fa-users"></i>
             <p>Klanten</p>
           </li>
-          <li>
+          <li onclick="location.href = 'leveranciers.php'">
             <i class="fa-solid fa-truck-field"></i>
             <p>Leveranciers</p>
           </li>
