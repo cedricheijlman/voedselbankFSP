@@ -137,7 +137,7 @@ try {
                 <td><?php echo $row['email']; ?></td>
                 <td><?php echo $row['telefoon']; ?></td>
                 <td class="actions">
-                  <a href="#" onclick="editProduct(0)"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a href="wijzigleverancier.php?idleverancier=<?php echo $row['id_leverancier'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a data-productid="<?php echo $row['id_leverancier']; ?>" onclick="showModal(this)"><i class="fa-solid fa-trash"></i></a>
                 </td>
               </tr>
