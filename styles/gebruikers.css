@@ -66,3 +66,40 @@ tr:hover {
   border: none;
   outline: none;
 }
+
+/* Modal */
+.overlay {
+  position: absolute;
+  width: 100%;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.816);
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.overlayForm {
+  background-color: white;
+  color: black;
+  padding: 20px;
+}
+
+.overlayForm a,
+.overlayForm button {
+  padding: 5px 10px;
+  background-color: rgb(56, 56, 56);
+  border-radius: 4px;
+  color: white;
+  margin: 0 2px;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.overlayButtonsContainer {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}

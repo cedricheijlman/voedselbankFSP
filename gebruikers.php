@@ -40,6 +40,16 @@ try {
 
 <body>
   <div class="container">
+    <div id="overlay" class="overlay">
+      <div class="overlayForm">
+        <h2>Verwijder Product</h2>
+        <p>Weet je zeker dat je dit product wilt verwijderen?</p>
+        <div class="overlayButtonsContainer">
+          <a onclick="hideModal()">Nee</a>
+          <button onclick="verwijderGebruiker()" name="modalButton">Ja</button>
+        </div>
+      </div>
+    </div>
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
@@ -134,7 +144,7 @@ try {
                     ?></td>
                 <td class="actions">
                   <a href="#" onclick="editProduct(0)"><i class="fa-solid fa-pen-to-square"></i></a>
-                  <a href="#" onclick="deleteProduct(0)"><i class="fa-solid fa-trash"></i></a>
+                  <a data-productid="<?php echo $row['id_gebruiker']; ?>" onclick="showModal(this)"><i class="fa-solid fa-trash"></i></a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -149,7 +159,33 @@ try {
       </table>
     </div>
   </div>
-  <script src="script.js"></script>
+  <script>
+    let idGebruiker; // Variable to store the selected product ID
+
+    function verwijderGebruiker() {
+      // Redirect to deleteproduct.php with the selected product ID
+      window.location.href = 'verwijdergebruiker.php?idgebruiker=' + idGebruiker;
+    }
+
+    function showModal(button) {
+      document.getElementById("overlay").style.display = "flex";
+      idGebruiker = button.getAttribute('data-productid');
+
+    }
+
+    function hideModal() {
+      document.getElementById("overlay").style.display = "none";
+    }
+    window.onclick = function(event) {
+      let modal = document.getElementById("overlay");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+  <script src="script.js">
+
+  </script>
 
 </body>
 
