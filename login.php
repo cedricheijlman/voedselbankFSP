@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_start();
 $_SESSION['loginError'] =  "";
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,6 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($gebruiker && password_verify($wachtwoord, $gebruiker['wachtwoord'])) {
       // Inloggen is gelukt\
+      $_SESSION['voornaam'] = $gebruiker['voornaam'];
+      $_SESSION['achternaam'] = $gebruiker['achternaam'];
+      $_SESSION['gebruikersnaam'] = $gebruiker['gebruikersnaam'];
+      $_SESSION['wachtwoord'] = $gebruiker['wachtwoord'];
+      $_SESSION['email'] = $gebruiker['email'];
       header('Location: homepage.php');
       exit;
     } else {
