@@ -97,7 +97,7 @@ try {
         <h2>Leveranciers</h2>
         <a href="./voegleverancier.php">Voeg leverancier toe</a>
       </div>
-      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op bedrijfsnaam" onkeyup="searchGebruiker()" />
+      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op bedrijfsnaam" onkeyup="searchLeverancier()" />
       <table id="productTable">
         <thead>
           <tr>
@@ -154,10 +154,31 @@ try {
     </div>
   </div>
   <script>
-    let idleverancier; // Variable to store the selected product ID
+    // Zoek Leverancier
+    function searchLeverancier() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+
+      let rows = document.getElementsByTagName("tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        let row = rows[i];
+        let bedrijfsnaam = row.getElementsByTagName("td")[1];
+
+        if (bedrijfsnaam) {
+          let value = bedrijfsnaam.textContent.toLowerCase();
+
+          if (value.indexOf(input) > -1) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        }
+      }
+    }
+
+    let idleverancier;
 
     function verwijderLeverancier() {
-      // Redirect to deleteproduct.php with the selected product ID
       window.location.href = 'verwijderleverancier.php?idleverancier=' + idleverancier;
     }
 

@@ -159,11 +159,33 @@ try {
       </table>
     </div>
   </div>
+
+  <script src="script.js"></script>
   <script>
-    let idGebruiker; // Variable to store the selected product ID
+    function searchGebruiker() {
+      let input = document.getElementById("searchInput").value.toLowerCase();
+
+      let rows = document.getElementsByTagName("tr");
+
+      for (let i = 0; i < rows.length; i++) {
+        let row = rows[i];
+        let gebruikersnaam = row.getElementsByTagName("td")[3];
+
+        if (gebruikersnaam) {
+          let value = gebruikersnaam.textContent.toLowerCase();
+
+          if (value.indexOf(input) > -1) {
+            row.style.display = "";
+          } else {
+            row.style.display = "none";
+          }
+        }
+      }
+    }
+
+    let idGebruiker;
 
     function verwijderGebruiker() {
-      // Redirect to deleteproduct.php with the selected product ID
       window.location.href = 'verwijdergebruiker.php?idgebruiker=' + idGebruiker;
     }
 
@@ -183,10 +205,6 @@ try {
       }
     }
   </script>
-  <script src="script.js">
-
-  </script>
-
 </body>
 
 </html>
