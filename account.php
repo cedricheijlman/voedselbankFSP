@@ -3,6 +3,12 @@ require_once 'credentials.php';
 session_start();
 $_SESSION['errorAccount'] =  "";
 
+$voornaamChanged = false;
+$achternaamChanged = false;
+$usernameChanged = false;
+$emailChanged = false;
+$passwordChanged = false;
+
 // account verwijderen
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['modalButton'])) {
   $conn = new PDO("mysql:host=$host;dbname=$dbname;port=$port", $username, $password);

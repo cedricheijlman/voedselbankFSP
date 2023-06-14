@@ -7,10 +7,12 @@ require_once 'credentials.php';
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
-  $streepjescode = $_POST['streepjescode'];
-  $productnaam = $_POST['productnaam'];
-  $categorie = $_POST['categorie'];
-  $aantal = $_POST['aantal'];
+  $bedrijfsnaam = $_POST['bedrijfsnaam'];
+  $postcode = $_POST['postcode'];
+  $huisnummer = $_POST['huisnummer'];
+  $plaats = $_POST['plaats'];
+  $email = $_POST['email'];
+  $telefoon = $_POST['telefoon'];
 
 
   $_SESSION['productgToevoegenError'] =  "";
@@ -21,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Controleren of de gebruikersnaam of e-mail al in gebruik zijn
-    $stmt = $conn->prepare('SELECT COUNT(*) FROM product WHERE streepjescode = ?');
-    $stmt->execute([$streepjescode]);
+    $stmt = $conn->prepare('SELECT COUNT(*) FROM leverancier WHERE bedrijfsnaam = ?');
+    $stmt->execute([$bedrijfsnaam]);
     $count = $stmt->fetchColumn();
 
     if ($count > 0) {
@@ -31,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Gegevens invoegen in de gebruikerstabel
     if ($_SESSION['productToevoegenError'] == "") {
-      $stmt = $conn->prepare('INSERT INTO product (streepjescode, categorie_id, naam, aantal) VALUES (?, ?, ?, ?)');
-      $stmt->execute([$streepjescode, $categorie, $productnaam, $aantal]);
-      header('Location: productvoorraad.php');
+      $stmt = $conn->prepare('INSERT INTO leverancier (bedrijfsnaam, postcode, huisnummer, plaats, email, telefoon) VALUES (?, ?, ?, ?, ?, ?)');
+      $stmt->execute([$bedrijfsnaam, $postcode, $huisnummer, $plaats, $email, $telefoon]);
+      header('Location: leveranciers.php');
     };
   } catch (PDOException $e) {
     $_SESSION['registratieErrror'] = 'Registratie mislukt';
@@ -74,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="fa-solid fa-user-group"></i>
             <p>Gebruikers</p>
           </li>
-          <li onclick="location.href = 'productvoorraad.php'" class="selected">
+          <li onclick="location.href = 'productvoorraad.php'">
             <i class="fa-solid fa-shop"></i>
             <p>Productvoorraad</p>
           </li>
@@ -86,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="fa-solid fa-users"></i>
             <p>Klanten</p>
           </li>
-          <li onclick="location.href = 'leveranciers.php'">
+          <li onclick="location.href = 'leveranciers.php'" class="selected">
             <i class="fa-solid fa-truck-field"></i>
             <p>Leveranciers</p>
           </li>
@@ -106,28 +108,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
     <div class="rechts">
-      <h2>Voeg Product Toe</h2>
+      <h2>Voeg leverancier toe</h2>
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-        <p>Product Informatie</p>
-        <input placeholder="Streepjescode" type="number" name="streepjescode" />
+        <p>Bedrijfsnaam</p>
+        <input placeholder="Bedrijfsnaam" type="text" name="bedrijfsnaam" required />
 
-        <input placeholder="Productnaam" name="productnaam" />
-        <select name="categorie">
-          <option value="1">Aardappelen, groente, fruit</option>
-          <option value="2">Kaas, vleeswaren</option>
-          <option value="3">Zuivel, plantaardig en eieren</option>
-          <option value="4">Bakkerij en banket</option>
-          <option value="5">Frisdrank, sappen, koffie en thee</option>
-          <option value="6">Pasta, rijst en wereldkeuken</option>
-          <option value="7">Snoep, koek, chips en chocolade</option>
-          <option value="8">Baby, verzorging en hygiene</option>
-        </select>
-        <input placeholder="Voorraad" type="number" name="aantal" />
+        <p>Postcode</p>
+        <input placeholder="Postcode" type="text" name="postcode" required />
+
+        <p>Huisnummer</p>
+        <input placeholder="Huisnummer" type="number" name="huisnummer" required />
+
+        <p>Plaats</p>
+        <input placeholder="Plaats" type="text" name="plaats" required />
+
+        <p>Email</p>
+        <input placeholder="Email" type="email" name="email" required />
+
+        <p>Telefoon</p>
+        <input placeholder="Telefoon" type="number" name="telefoon" required />
+
         <div class="formButtons">
           <button id="cancelKnop">
-            <a href="productvoorraad.php">Cancel</a>
+            <a href="leveranciers.php">Cancel</a>
           </button>
-          <button id="voegKnop" type="submit">Voeg Product</button>
+          <button id="voegKnop" type="submit">Voeg Leverancier</button>
         </div>
       </form>
     </div>

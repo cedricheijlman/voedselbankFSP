@@ -42,8 +42,8 @@ try {
   <div class="container">
     <div id="overlay" class="overlay">
       <div class="overlayForm">
-        <h2>Verwijder Product</h2>
-        <p>Weet je zeker dat je dit product wilt verwijderen?</p>
+        <h2>Verwijder Gebruiker</h2>
+        <p>Weet je zeker dat je deze gebruiker wilt verwijderen?</p>
         <div class="overlayButtonsContainer">
           <a onclick="hideModal()">Nee</a>
           <button onclick="verwijderGebruiker()" name="modalButton">Ja</button>
@@ -143,7 +143,7 @@ try {
                     }
                     ?></td>
                 <td class="actions">
-                  <a href="#" onclick="editProduct(0)"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a href="wijziggebruiker.php?gebruikerid=<?php echo $row['id_gebruiker'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                   <a data-productid="<?php echo $row['id_gebruiker']; ?>" onclick="showModal(this)"><i class="fa-solid fa-trash"></i></a>
                 </td>
               </tr>
