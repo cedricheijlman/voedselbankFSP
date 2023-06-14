@@ -64,7 +64,7 @@ try {
             <i class="fa-solid fa-users"></i>
             <p>Klanten</p>
           </li>
-          <li>
+          <li onclick="location.href = 'leveranciers.php'">
             <i class="fa-solid fa-truck-field"></i>
             <p>Leveranciers</p>
           </li>

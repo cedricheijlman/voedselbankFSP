@@ -37,6 +37,16 @@ try {
 
 <body>
   <div class="container">
+    <div id="overlay" class="overlay">
+      <div class="overlayForm">
+        <h2>Verwijder Product</h2>
+        <p>Weet je zeker dat je dit product wilt verwijderen?</p>
+        <div class="overlayButtonsContainer">
+          <a onclick="hideModal()">Nee</a>
+          <button onclick="deleteProduct()" name="modalButton">Ja</button>
+        </div>
+      </div>
+    </div>
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
@@ -69,7 +79,7 @@ try {
             <i class="fa-solid fa-chart-simple"></i>
             <p>Maand Overzicht</p>
           </li>
-          <li>
+          <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
           </li>
@@ -116,7 +126,7 @@ try {
 
                 <td class="actions">
                   <a href="wijzigproduct.php?streepjescode=<?php echo $row['streepjescode'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                  <a href="#" onclick="deleteProduct(0)"><i class="fa-solid fa-trash"></i></a>
+                  <a data-productid="<?php echo $row['streepjescode']; ?>" onclick="showModal(this)"><i class="fa-solid fa-trash"></i></a>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -131,6 +141,30 @@ try {
       <script src="script.js"></script>
     </div>
   </div>
+  <script>
+    let streepjescode; // Variable to store the selected product ID
+
+    function deleteProduct() {
+      // Redirect to deleteproduct.php with the selected product ID
+      window.location.href = 'deleteproduct.php?streepjescode=' + streepjescode;
+    }
+
+    function showModal(button) {
+      document.getElementById("overlay").style.display = "flex";
+      streepjescode = button.getAttribute('data-productid');
+
+    }
+
+    function hideModal() {
+      document.getElementById("overlay").style.display = "none";
+    }
+    window.onclick = function(event) {
+      let modal = document.getElementById("overlay");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
 </body>
 
 </html>
