@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Voltooid</h1>
+    <a href="http://localhost/voedselbankFSP-master/">Terug naar main menu</a>
 </body>
 </html>
