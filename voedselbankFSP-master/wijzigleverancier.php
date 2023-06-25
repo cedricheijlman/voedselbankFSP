@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['soortgebruiker'])) {
+  header("Location: login.php");
+  exit();
+}
 require_once 'credentials.php';
 
 $idleverancier = $_GET['idleverancier'];

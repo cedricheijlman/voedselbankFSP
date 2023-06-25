@@ -1,6 +1,10 @@
 <?php
 require_once 'credentials.php';
 session_start();
+if (!isset($_SESSION['soortgebruiker'])) {
+  header("Location: login.php");
+  exit();
+}
 $_SESSION['errorAccount'] =  "";
 
 $voornaamChanged = false;
