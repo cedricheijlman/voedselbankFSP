@@ -148,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input placeholder="Email" value="<?php echo $email ?>" type="email" name="email" required />
 
         <p>Telefoon</p>
-        <input placeholder="Telefoon" value="<?php echo $telefoon ?>" name="telefoon" required pattern="^[0-9]+$" minlength="10"/>
+        <input placeholder="Telefoon" value="<?php echo $telefoon ?>" name="telefoon" required pattern="^[0-9]+$" minlength="10" maxlength="10"/>
 
 
         <div class="formButtons">
