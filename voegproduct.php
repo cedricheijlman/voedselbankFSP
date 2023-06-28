@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p>Product Informatie</p>
         <input placeholder="Streepjescode" type="number" name="streepjescode" pattern="^[0-9]+$"/>
 
-        <input placeholder="Productnaam" name="productnaam" />
+        <input placeholder="Productnaam" name="productnaam" pattern="^[a-zA-Z\s]+$"/>
         <select name="categorie">
           <option value="1">Aardappelen, groente, fruit</option>
           <option value="2">Kaas, vleeswaren</option>

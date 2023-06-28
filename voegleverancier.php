@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input placeholder="Email" type="email" name="email" required />
 
         <p>Telefoon</p>
-        <input placeholder="Telefoon" type="number" name="telefoon" required pattern="^[0-9]+$" minlength="10"/>
+        <input placeholder="Telefoon" type="number" name="telefoon" required pattern="\d{10}"/>
 
         <div class="formButtons">
           <button id="cancelKnop">
