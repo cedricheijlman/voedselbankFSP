@@ -6,24 +6,19 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $klantId = $_POST['klant_id'];
     $selectedWensen = $_POST['wensen'];
     $persoonlijkeWens = $_POST['persoonlijkeWens'];
 
-    // Iterate through the selected options
     foreach ($selectedWensen as $wensId) {
-        // Insert into klant_has_wens table
         $sql = "INSERT INTO klant_has_wens (id_klant, id_wens) VALUES ($klantId, $wensId)";
         $conn->query($sql);
     }
 
-    // Insert the persoonlijkeWens into klant.persoonlijkeWens
     $sql = "UPDATE klant SET persoonlijkeWens = '$persoonlijkeWens' WHERE id_klant = $klantId";
     $conn->query($sql);
 
-    // Redirect to voltooid.php
     header("Location: voltooid.php");
     exit();
 }
@@ -41,14 +36,9 @@ if (isset($_GET["naam"]) && isset($_GET["achternaam"]) && isset($_GET["email"]) 
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        // Fetch the client ID from the result
         $row = $result->fetch_assoc();
         $klantId = $row["id_klant"];
 
-        // Use the client ID as needed
-        // echo "Klant ID: " . $klantId . "<br>";
-
-        // Display the form
         ?>
         <!DOCTYPE html>
         <html lang="en">
@@ -101,11 +91,10 @@ if (isset($_GET["naam"]) && isset($_GET["achternaam"]) && isset($_GET["email"]) 
         </html>
         <?php
     } else {
-        echo "No matching client found.";
+        echo "Geen klant gevonden";
     }
 } else {
-    // Handle the case when the query parameters are missing
-    echo "Missing query parameters.";
+    echo "Geen parameters";
 }
 
 $conn->close();
