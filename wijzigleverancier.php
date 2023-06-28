@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['soortgebruiker'])) {
+  header("Location: login.php");
+  exit();
+}
 require_once 'credentials.php';
 
 $idleverancier = $_GET['idleverancier'];
@@ -77,35 +81,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
-        <ul>
+      <ul>
           <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-          <li onclick="location.href = 'gebruikers.php'">
-            <i class="fa-solid fa-user-group"></i>
-            <p>Gebruikers</p>
-          </li>
-          <li onclick="location.href = 'productvoorraad.php'">
-            <i class="fa-solid fa-shop"></i>
-            <p>Productvoorraad</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-bag-shopping"></i>
-            <p>Voedselpakketten</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-users"></i>
-            <p>Klanten</p>
-          </li>
-          <li onclick="location.href = 'leveranciers.php'" class="selected">
-            <i class="fa-solid fa-truck-field"></i>
-            <p>Leveranciers</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-chart-simple"></i>
-            <p>Maand Overzicht</p>
-          </li>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li onclick="location.href = 'productvoorraad.php'">
+              <i class="fa-solid fa-shop"></i>
+              <p>Productvoorraad</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li>
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>Voedselpakketten</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2): ?>
+            <li onclick="location.href = 'leveranciers.php'" class="selected">
+              <i class="fa-solid fa-truck-field"></i>
+              <p>Leveranciers</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1): ?>
+            <li>
+              <i class="fa-solid fa-users"></i>
+              <p>Klanten</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-chart-simple"></i>
+              <p>Maand Overzicht</p>
+            </li>
+            <li onclick="location.href = 'gebruikers.php'">
+              <i class="fa-solid fa-user-friends"></i>
+              <p>Gebruikers</p>
+            </li>
+          <?php endif; ?>
           <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
@@ -124,19 +136,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input value="<?php echo $bedrijfsnaam ?>" placeholder="Bedrijfsnaam" type="text" name="bedrijfsnaam" required />
 
         <p>Postcode</p>
-        <input placeholder="Postcode" value="<?php echo $postcode ?>" type="text" name="postcode" minlength="6" maxlength="6" required />
+        <input placeholder="Postcode" value="<?php echo $postcode ?>" type="text" name="postcode" minlength="6" maxlength="6" required pattern="\d{4}[a-zA-Z]{2}"/>
 
         <p>Huisnummer</p>
         <input placeholder="Huisnummer" type="number" value="<?php echo $huisnummer ?>" name="huisnummer" required />
 
         <p>Plaats</p>
-        <input placeholder="Plaats" value="<?php echo $plaats ?>" name="plaats" required />
+        <input placeholder="Plaats" value="<?php echo $plaats ?>" name="plaats" required pattern="^[a-zA-Z\s]+$"/>
 
         <p>Email</p>
         <input placeholder="Email" value="<?php echo $email ?>" type="email" name="email" required />
 
         <p>Telefoon</p>
-        <input placeholder="Telefoon" value="<?php echo $telefoon ?>" name="telefoon" required />
+        <input placeholder="Telefoon" value="<?php echo $telefoon ?>" name="telefoon" required pattern="^[0-9]+$" minlength="10"/>
 
 
         <div class="formButtons">

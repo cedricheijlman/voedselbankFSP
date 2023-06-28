@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['soortgebruiker'])) {
+  header("Location: login.php");
+  exit();
+}
 require_once 'credentials.php';
 
 $streepjescode = $_GET['streepjescode'];
@@ -73,35 +77,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
-        <ul>
+      <ul>
           <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-          <li onclick="location.href = 'gebruikers.php'">
-            <i class="fa-solid fa-user-group"></i>
-            <p>Gebruikers</p>
-          </li>
-          <li onclick="location.href = 'productvoorraad.php'" class="selected">
-            <i class="fa-solid fa-shop"></i>
-            <p>Productvoorraad</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-bag-shopping"></i>
-            <p>Voedselpakketten</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-users"></i>
-            <p>Klanten</p>
-          </li>
-          <li onclick="location.href = 'leveranciers.php'">
-            <i class="fa-solid fa-truck-field"></i>
-            <p>Leveranciers</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-chart-simple"></i>
-            <p>Maand Overzicht</p>
-          </li>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li onclick="location.href = 'productvoorraad.php'" class="selected">
+              <i class="fa-solid fa-shop"></i>
+              <p>Productvoorraad</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li>
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>Voedselpakketten</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2): ?>
+            <li onclick="location.href = 'leveranciers.php'">
+              <i class="fa-solid fa-truck-field"></i>
+              <p>Leveranciers</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1): ?>
+            <li>
+              <i class="fa-solid fa-users"></i>
+              <p>Klanten</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-chart-simple"></i>
+              <p>Maand Overzicht</p>
+            </li>
+            <li onclick="location.href = 'gebruikers.php'">
+              <i class="fa-solid fa-user-friends"></i>
+              <p>Gebruikers</p>
+            </li>
+          <?php endif; ?>
           <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
@@ -117,9 +129,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Wijzig Product</h2>
       <form action="<?php echo 'wijzigproduct.php?streepjescode=' . $streepjescode; ?>" method="POST">
         <p>Streepjescode</p>
-        <input readonly value="<?php echo $streepjescode ?>" placeholder="Streepjescode" type="number" name="streepjescode" />
+        <input readonly value="<?php echo $streepjescode ?>" placeholder="Streepjescode" type="number" name="streepjescode" pattern="^[0-9]+$"/>
         <p>Product Naam</p>
-        <input readonly placeholder="Productnaam" required value="<?php echo $productnaam ?>" name="productnaam" />
+        <input readonly placeholder="Productnaam" required value="<?php echo $productnaam ?>" name="productnaam" pattern="^[a-zA-Z\s]+$"/>
         <p>Product Categorie</p>
         <select name="categorie" required value="<?php echo $categorie ?>">
           <option value="1">Aardappelen, groente, fruit</option>
@@ -132,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <option value="8">Baby, verzorging en hygiene</option>
         </select>
         <p>Aantal in voorrraad</p>
-        <input placeholder="Voorraad" required type="number" value="<?php echo $aantal ?>" name="aantal" />
+        <input placeholder="Voorraad" required type="number" value="<?php echo $aantal ?>" name="aantal" pattern="^[0-9]+$"/>
         <div class="formButtons">
           <button id="cancelKnop">
             <a href="productvoorraad.php">Cancel</a>

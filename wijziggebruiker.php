@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['soortgebruiker'])) {
+  header("Location: login.php");
+  exit();
+}
 require_once 'credentials.php';
 
 $gebruikerId = $_GET['gebruikerid'];
@@ -83,35 +87,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
-        <ul>
+      <ul>
           <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-          <li onclick="location.href = 'gebruikers.php'" class="selected">
-            <i class="fa-solid fa-user-group"></i>
-            <p>Gebruikers</p>
-          </li>
-          <li onclick="location.href = 'productvoorraad.php'">
-            <i class="fa-solid fa-shop"></i>
-            <p>Productvoorraad</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-bag-shopping"></i>
-            <p>Voedselpakketten</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-users"></i>
-            <p>Klanten</p>
-          </li>
-          <li onclick="location.href = 'leveranciers.php'">
-            <i class="fa-solid fa-truck-field"></i>
-            <p>Leveranciers</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-chart-simple"></i>
-            <p>Maand Overzicht</p>
-          </li>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li onclick="location.href = 'productvoorraad.php'">
+              <i class="fa-solid fa-shop"></i>
+              <p>Productvoorraad</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li>
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>Voedselpakketten</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2): ?>
+            <li onclick="location.href = 'leveranciers.php'">
+              <i class="fa-solid fa-truck-field"></i>
+              <p>Leveranciers</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1): ?>
+            <li>
+              <i class="fa-solid fa-users"></i>
+              <p>Klanten</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-chart-simple"></i>
+              <p>Maand Overzicht</p>
+            </li>
+            <li onclick="location.href = 'gebruikers.php'" class="selected">
+              <i class="fa-solid fa-user-friends"></i>
+              <p>Gebruikers</p>
+            </li>
+          <?php endif; ?>
           <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
@@ -127,20 +139,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Wijzig Gebruiker</h2>
       <form action="<?php echo 'wijziggebruiker.php?gebruikerid=' . $gebruikerId; ?>" method="POST">
         <p>Naam</p>
-        <input readonly value="<?php echo $naam ?>" placeholder="Naam" type="text" name="naam" />
+        <input readonly value="<?php echo $naam ?>" placeholder="Naam" type="text" name="naam" pattern="^[a-zA-Z\u00C0-\u017F]+$"/>
         <p>Achternaam</p>
-        <input placeholder="Achternaam" required value="<?php echo $achternaam ?>" name="achternaam" />
+        <input placeholder="Achternaam" required value="<?php echo $achternaam ?>" name="achternaam" pattern="^[a-zA-Z\u00C0-\u017F]+$"/>
         <p>Gebruikersnaam</p>
         <input placeholder="Productnaam" required value="<?php echo $gebruikersnaam ?>" name="gebruikersnaam" />
         <p>Email</p>
         <input placeholder="Productnaam" required value="<?php echo $email ?>" name="email" />
         <p>Wachtwoord</p>
-        <input placeholder="Wijzig wachtwoord" type="password" name="wachtwoord" />
+        <input placeholder="Wijzig wachtwoord" type="password" name="wachtwoord" minlength="8"/>
         <p>Soort Gebruiker</p>
         <select name="soortgebruiker" required value="<?php echo $soortgebruiker ?>">
-          <option value="1">Vrijwilliger</option>
+          <option value="3">Vrijwilliger</option>
           <option value="2">Magazijnmedewerker</option>
-          <option value="3">Directeur</option>
+          <option value="1">Directeur</option>
         </select>
         <p>Toegang?</p>
         <select name="toegang" required value="<?php echo $toegang ?>">

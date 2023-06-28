@@ -1,6 +1,7 @@
 <?php
 session_start();
-$_SESSION['loginError'] =  "";
+$_SESSION['loginError'] = "";
+
 // Controleren of het formulier is ingediend
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Formuliergegevens ophalen
@@ -15,28 +16,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Gebruikersgegevens ophalen op basis van de gebruikersnaam
-    $stmt = $conn->prepare('SELECT id_gebruiker, wachtwoord FROM gebruiker WHERE email = ?');
+    $stmt = $conn->prepare('SELECT * FROM gebruiker WHERE email = ?');
     $stmt->execute([$email]);
     $gebruiker = $stmt->fetch();
 
     if ($gebruiker && password_verify($wachtwoord, $gebruiker['wachtwoord'])) {
-      // Inloggen is gelukt\
-      $_SESSION['voornaam'] = $gebruiker['voornaam'];
-      $_SESSION['achternaam'] = $gebruiker['achternaam'];
-      $_SESSION['gebruikersnaam'] = $gebruiker['gebruikersnaam'];
-      $_SESSION['wachtwoord'] = $gebruiker['wachtwoord'];
-      $_SESSION['email'] = $gebruiker['email'];
-      header('Location: homepage.php');
-      exit;
+      if ($gebruiker['toegang'] == 1) {
+        // Inloggen is gelukt
+        $_SESSION['voornaam'] = $gebruiker['naam'];
+        $_SESSION['achternaam'] = $gebruiker['achternaam'];
+        $_SESSION['gebruikersnaam'] = $gebruiker['gebruikersnaam'];
+        $_SESSION['wachtwoord'] = $gebruiker['wachtwoord'];
+        $_SESSION['email'] = $gebruiker['email'];
+        $_SESSION['soortgebruiker'] = $gebruiker['id_soortgebruiker'];
+        header('Location: homepage.php');
+        exit;
+      } else if ($gebruiker['toegang'] == 0) {
+        $_SESSION['loginError'] = 'Geen toegang tot account!';
+      }
     } else {
-      $_SESSION['loginError'] =  'Ongeldige gebruikersnaam of wachtwoord';
+      $_SESSION['loginError'] = 'Ongeldige gebruikersnaam of wachtwoord';
     }
   } catch (PDOException $e) {
-    $_SESSION['loginError'] =  'Inloggen mislukt, probeer opnieuw!';
+    $_SESSION['loginError'] = 'Inloggen mislukt, probeer opnieuw!';
   }
 
   // Databaseverbinding sluiten
   $conn = null;
+
 }
 ?>
 <!DOCTYPE html>

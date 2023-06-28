@@ -71,11 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2 class="formTitel">Maak een account</h2>
         <div class="formInput">
           <label for="voornaam">Voornaam</label>
-          <input type="text" id="voornaam" name="voornaam" required />
+          <input type="text" id="voornaam" name="voornaam" required pattern="[A-Za-z\u00C0-\u017F]+"/>
         </div>
         <div class="formInput">
           <label for="achternaam">Achternaam</label>
-          <input type="text" id="achternaam" name="achternaam" required />
+          <input type="text" id="achternaam" name="achternaam" required pattern="[A-Za-z\u00C0-\u017F]+"/>
         </div>
         <div class="formInput">
           <label for="gebruikersnaam">Gebruikersnaam</label>

@@ -1,5 +1,9 @@
 <?php
 session_start();
+if (!isset($_SESSION['soortgebruiker'])) {
+  header("Location: login.php");
+  exit();
+}
 $_SESSION['productToevoegenError'] =  "";
 
 require_once 'credentials.php';
@@ -67,36 +71,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
-        <ul>
+      <ul>
           <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-          <li onclick="location.href = 'gebruikers.php'">
-            <i class="fa-solid fa-user-group"></i>
-            <p>Gebruikers</p>
-          </li>
-          <li onclick="location.href = 'productvoorraad.php'">
-            <i class="fa-solid fa-shop"></i>
-            <p>Productvoorraad</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-bag-shopping"></i>
-            <p>Voedselpakketten</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-users"></i>
-            <p>Klanten</p>
-          </li>
-          <li onclick="location.href = 'leveranciers.php'" class="selected">
-            <i class="fa-solid fa-truck-field"></i>
-            <p>Leveranciers</p>
-          </li>
-          <li>
-            <i class="fa-solid fa-chart-simple"></i>
-            <p>Maand Overzicht</p>
-          </li>
-          <li>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li onclick="location.href = 'productvoorraad.php'">
+              <i class="fa-solid fa-shop"></i>
+              <p>Productvoorraad</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3): ?>
+            <li>
+              <i class="fa-solid fa-bag-shopping"></i>
+              <p>Voedselpakketten</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2): ?>
+            <li onclick="location.href = 'leveranciers.php'" class="selected">
+              <i class="fa-solid fa-truck-field"></i>
+              <p>Leveranciers</p>
+            </li>
+          <?php endif; ?>
+          <?php if ($_SESSION['soortgebruiker'] == 1): ?>
+            <li>
+              <i class="fa-solid fa-users"></i>
+              <p>Klanten</p>
+            </li>
+            <li>
+              <i class="fa-solid fa-chart-simple"></i>
+              <p>Maand Overzicht</p>
+            </li>
+            <li onclick="location.href = 'gebruikers.php'">
+              <i class="fa-solid fa-user-friends"></i>
+              <p>Gebruikers</p>
+            </li>
+          <?php endif; ?>
+          <li onclick="location.href = 'account.php'">
             <i class="fa-regular fa-circle-user"></i>
             <p>Account</p>
           </li>
@@ -114,19 +126,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input placeholder="Bedrijfsnaam" type="text" name="bedrijfsnaam" required />
 
         <p>Postcode</p>
-        <input placeholder="Postcode" type="text" name="postcode" required />
+        <input placeholder="Postcode" type="text" name="postcode" required pattern="\d{4}[a-zA-Z]{2}"/>
 
         <p>Huisnummer</p>
         <input placeholder="Huisnummer" type="number" name="huisnummer" required />
 
         <p>Plaats</p>
-        <input placeholder="Plaats" type="text" name="plaats" required />
+        <input placeholder="Plaats" type="text" name="plaats" required pattern="[A-Za-z\u00C0-\u017F]+"/>
 
         <p>Email</p>
         <input placeholder="Email" type="email" name="email" required />
 
         <p>Telefoon</p>
-        <input placeholder="Telefoon" type="number" name="telefoon" required />
+        <input placeholder="Telefoon" type="number" name="telefoon" required pattern="^[0-9]+$" minlength="10"/>
 
         <div class="formButtons">
           <button id="cancelKnop">
