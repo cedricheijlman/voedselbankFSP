@@ -1,0 +1,4 @@
+ALTER TABLE voedselbank.klant
+ADD persoonlijkeWens varchar(999);
+
+Ik heb een extra column toegevoegd aan de database
