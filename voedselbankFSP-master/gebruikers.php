@@ -3,6 +3,14 @@ session_start();
 if (!isset($_SESSION['soortgebruiker'])) {
   header("Location: login.php");
   exit();
+} 
+elseif ($_SESSION['soortgebruiker'] == 2) {
+  header("Location: homepage.php");
+  exit();
+} 
+elseif ($_SESSION['soortgebruiker'] == 3) {
+  header("Location: homepage.php");
+  exit();
 }
 // MySQL database configuration
 require_once 'credentials.php';

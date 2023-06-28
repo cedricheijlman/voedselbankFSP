@@ -127,8 +127,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Voeg Gebruiker Toe</h2>
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <p>Gebruiker Informatie</p>
-        <input placeholder=" Naam" name="voornaam" type="text" required />
-        <input placeholder="Achternaam" name="achternaam" type="text" required />
+        <input placeholder=" Naam" name="voornaam" type="text" required pattern="[A-Za-z\u00C0-\u017F]+"/>
+        <input placeholder="Achternaam" name="achternaam" type="text" required pattern="[A-Za-z\u00C0-\u017F]+"/>
         <input placeholder="Gebruikersnaam" name="gebruikersnaam" type="text" required />
         <input placeholder="Email" name="email" type="email" required />
         <input placeholder="Wachtwoord" type="password" pattern=".{8,}" minlength="8" name="wachtwoord" required />

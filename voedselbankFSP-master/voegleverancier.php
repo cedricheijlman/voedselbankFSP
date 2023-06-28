@@ -126,19 +126,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input placeholder="Bedrijfsnaam" type="text" name="bedrijfsnaam" required />
 
         <p>Postcode</p>
-        <input placeholder="Postcode" type="text" name="postcode" required />
+        <input placeholder="Postcode" type="text" name="postcode" required pattern="\d{4}[a-zA-Z]{2}"/>
 
         <p>Huisnummer</p>
         <input placeholder="Huisnummer" type="number" name="huisnummer" required />
 
         <p>Plaats</p>
-        <input placeholder="Plaats" type="text" name="plaats" required />
+        <input placeholder="Plaats" type="text" name="plaats" required pattern="[A-Za-z\u00C0-\u017F]+"/>
 
         <p>Email</p>
         <input placeholder="Email" type="email" name="email" required />
 
         <p>Telefoon</p>
-        <input placeholder="Telefoon" type="number" name="telefoon" required />
+        <input placeholder="Telefoon" type="number" name="telefoon" required pattern="\d{10}"/>
 
         <div class="formButtons">
           <button id="cancelKnop">

@@ -129,9 +129,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Wijzig Product</h2>
       <form action="<?php echo 'wijzigproduct.php?streepjescode=' . $streepjescode; ?>" method="POST">
         <p>Streepjescode</p>
-        <input readonly value="<?php echo $streepjescode ?>" placeholder="Streepjescode" type="number" name="streepjescode" />
+        <input readonly value="<?php echo $streepjescode ?>" placeholder="Streepjescode" type="number" name="streepjescode" pattern="^[0-9]+$"/>
         <p>Product Naam</p>
-        <input readonly placeholder="Productnaam" required value="<?php echo $productnaam ?>" name="productnaam" />
+        <input readonly placeholder="Productnaam" required value="<?php echo $productnaam ?>" name="productnaam" pattern="^[a-zA-Z\s]+$"/>
         <p>Product Categorie</p>
         <select name="categorie" required value="<?php echo $categorie ?>">
           <option value="1">Aardappelen, groente, fruit</option>
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <option value="8">Baby, verzorging en hygiene</option>
         </select>
         <p>Aantal in voorrraad</p>
-        <input placeholder="Voorraad" required type="number" value="<?php echo $aantal ?>" name="aantal" />
+        <input placeholder="Voorraad" required type="number" value="<?php echo $aantal ?>" name="aantal" pattern="^[0-9]+$"/>
         <div class="formButtons">
           <button id="cancelKnop">
             <a href="productvoorraad.php">Cancel</a>

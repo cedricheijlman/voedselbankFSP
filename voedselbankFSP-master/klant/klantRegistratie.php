@@ -7,9 +7,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Handle form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve form data
     $naam = $_POST["naam"];
     $tussenvoegsel = $_POST["tussenvoegsel"];
     $achternaam = $_POST["achternaam"];
@@ -22,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kinderen = $_POST["kinderen"];
     $babys = $_POST["babys"];
 
-    // Prepare and execute SQL statement
     $sql = "INSERT INTO klant (naam, tussenvoegsel, achternaam, postcode, huisnummer, plaats, telefoon, email, volwassenen, kinderen, `baby's`)
             VALUES ('$naam', '$tussenvoegsel', '$achternaam', '$postcode', '$huisnummer', '$plaats', '$telefoon', '$email', '$volwassenen', '$kinderen', '$babys')";
 
@@ -37,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'telefoon' => $telefoon
         ));
     
-        // Redirect to wensKoppeling.php with query parameters
         header("Location: wensKoppeling.php?" . $params);
         exit();
     } else {
@@ -45,7 +41,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-// Close database connection
 $conn->close();
 
 ?>

@@ -136,19 +136,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input value="<?php echo $bedrijfsnaam ?>" placeholder="Bedrijfsnaam" type="text" name="bedrijfsnaam" required />
 
         <p>Postcode</p>
-        <input placeholder="Postcode" value="<?php echo $postcode ?>" type="text" name="postcode" minlength="6" maxlength="6" required />
+        <input placeholder="Postcode" value="<?php echo $postcode ?>" type="text" name="postcode" minlength="6" maxlength="6" required pattern="\d{4}[a-zA-Z]{2}"/>
 
         <p>Huisnummer</p>
         <input placeholder="Huisnummer" type="number" value="<?php echo $huisnummer ?>" name="huisnummer" required />
 
         <p>Plaats</p>
-        <input placeholder="Plaats" value="<?php echo $plaats ?>" name="plaats" required />
+        <input placeholder="Plaats" value="<?php echo $plaats ?>" name="plaats" required pattern="^[a-zA-Z\s]+$"/>
 
         <p>Email</p>
         <input placeholder="Email" value="<?php echo $email ?>" type="email" name="email" required />
 
         <p>Telefoon</p>
-        <input placeholder="Telefoon" value="<?php echo $telefoon ?>" name="telefoon" required />
+        <input placeholder="Telefoon" value="<?php echo $telefoon ?>" name="telefoon" required pattern="^[0-9]+$" minlength="10"/>
 
 
         <div class="formButtons">

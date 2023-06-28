@@ -139,15 +139,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Wijzig Gebruiker</h2>
       <form action="<?php echo 'wijziggebruiker.php?gebruikerid=' . $gebruikerId; ?>" method="POST">
         <p>Naam</p>
-        <input readonly value="<?php echo $naam ?>" placeholder="Naam" type="text" name="naam" />
+        <input readonly value="<?php echo $naam ?>" placeholder="Naam" type="text" name="naam" pattern="^[a-zA-Z\u00C0-\u017F]+$"/>
         <p>Achternaam</p>
-        <input placeholder="Achternaam" required value="<?php echo $achternaam ?>" name="achternaam" />
+        <input placeholder="Achternaam" required value="<?php echo $achternaam ?>" name="achternaam" pattern="^[a-zA-Z\u00C0-\u017F]+$"/>
         <p>Gebruikersnaam</p>
         <input placeholder="Productnaam" required value="<?php echo $gebruikersnaam ?>" name="gebruikersnaam" />
         <p>Email</p>
         <input placeholder="Productnaam" required value="<?php echo $email ?>" name="email" />
         <p>Wachtwoord</p>
-        <input placeholder="Wijzig wachtwoord" type="password" name="wachtwoord" />
+        <input placeholder="Wijzig wachtwoord" type="password" name="wachtwoord" minlength="8"/>
         <p>Soort Gebruiker</p>
         <select name="soortgebruiker" required value="<?php echo $soortgebruiker ?>">
           <option value="3">Vrijwilliger</option>

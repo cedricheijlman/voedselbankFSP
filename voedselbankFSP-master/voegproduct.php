@@ -121,9 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2>Voeg Product Toe</h2>
       <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <p>Product Informatie</p>
-        <input placeholder="Streepjescode" type="number" name="streepjescode" />
+        <input placeholder="Streepjescode" type="number" name="streepjescode" pattern="^[0-9]+$"/>
 
-        <input placeholder="Productnaam" name="productnaam" />
+        <input placeholder="Productnaam" name="productnaam" pattern="^[a-zA-Z\s]+$"/>
         <select name="categorie">
           <option value="1">Aardappelen, groente, fruit</option>
           <option value="2">Kaas, vleeswaren</option>
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <option value="7">Snoep, koek, chips en chocolade</option>
           <option value="8">Baby, verzorging en hygiene</option>
         </select>
-        <input placeholder="Voorraad" type="number" name="aantal" />
+        <input placeholder="Voorraad" type="number" name="aantal" pattern="^[0-9]+$"/>
         <div class="formButtons">
           <button id="cancelKnop">
             <a href="productvoorraad.php">Cancel</a>
