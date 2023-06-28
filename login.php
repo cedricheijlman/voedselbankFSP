@@ -8,11 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $wachtwoord = $_POST['wachtwoord'];
 
   // Een PDO databaseverbinding maken
-  $host = '127.0.0.1';
-  $dbname = 'voedselBank';
-  $username = 'root';
-  $password = '12345678';
-  $port = '3306';
+  include_once 'credentials.php';
 
   try {
     $conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
