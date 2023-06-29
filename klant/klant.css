@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     box-sizing: border-box;
     margin: 0;
@@ -72,4 +73,80 @@
   #persoonlijke_wens {
     height: 300px;
     width: 100%;
+=======
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    font-family: "Poppins";
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .formInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 13px;
+    font-size: 18px;
+  }
+
+  .formTitel {
+    font-weight: 500;
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .formInput input {
+    font-family: "Poppins";
+    padding: 7px 10px;
+    font-size: 15px;
+    border: 2px solid #cccccc;
+    border-radius: 3px;
+  }
+
+  .inputs {
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: min-content;
+    grid-gap: 10px;
+  }
+
+
+  .knop {
+    background-color: #597ea0;
+    color: white;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 3px;
+    font-size: 17px;
+    border: none;
+    font-family: "Poppins";
+    margin-top: 10px;
+  }
+  
+  /* @media (max-width: 768px) {
+    .inputs {
+      grid-template-columns: 1fr;
+    }
+  } */
+  
+
+  /* .form {
+    border: 1px solid black;
+  } */
+
+
+  #persoonlijke_wens {
+    height: 300px;
+    width: 100%;
+>>>>>>> 778f682 (push)
   }

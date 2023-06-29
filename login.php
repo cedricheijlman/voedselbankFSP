@@ -31,8 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['soortgebruiker'] = $gebruiker['id_soortgebruiker'];
         header('Location: homepage.php');
         exit;
+<<<<<<< HEAD
       } else if ($gebruiker['toegang'] == 0) {
         $_SESSION['loginError'] = 'Geen toegang tot account!';
+=======
+>>>>>>> 778f682 (push)
       }
     } else {
       $_SESSION['loginError'] = 'Ongeldige gebruikersnaam of wachtwoord';

@@ -1,0 +1,88 @@
+.voedselpakketDatums {
+  display: flex;
+  border-bottom: 1px solid rgb(88, 88, 88);
+  padding-bottom: 20px;
+}
+
+.voedselpakketDatums p {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.voedselpakketDatums span {
+  color: grey;
+  font-weight: 600;
+}
+
+.lijn {
+  color: rgb(196, 25, 25) !important;
+  margin: 0 10px;
+}
+
+.productenlijst {
+  display: flex;
+  flex-direction: column;
+  padding: 15px 0;
+  border-bottom: 1px solid rgb(88, 88, 88);
+}
+
+.product {
+  border: 1px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.product h2 {
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.klantInfo {
+  padding: 15px 0;
+  border-bottom: 1px solid rgb(88, 88, 88);
+}
+
+.klantDetail {
+  margin-top: 15px;
+  margin-right: 25px;
+  width: 25%;
+}
+
+.klantDetail h6 {
+  font-size: 14px;
+  font-weight: 300;
+  color: rgb(145, 145, 145);
+}
+
+.klantDetail p {
+  font-weight: 600;
+}
+
+.klantInfoRow {
+  display: flex;
+}
+
+.voedselpakketActies {
+  padding: 20px 0;
+}
+
+.voedselpakketActies a {
+  padding: 8px 25px;
+  border: 1px solid rgb(91, 91, 91);
+  border-radius: 4px;
+  font-size: 15px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.wijzig {
+  background-color: rgba(55, 122, 55, 0.824);
+}
+
+.verwijder {
+  background-color: rgb(157, 6, 6);
+}

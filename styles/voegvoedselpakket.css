@@ -1,0 +1,135 @@
+.producten {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  align-items: center;
+  border-bottom: 2px solid rgb(82, 82, 82);
+  padding-bottom: 10px;
+  margin-top: 15px;
+}
+
+.producten span {
+  background-color: rgb(60, 60, 60);
+  padding: 5px 15px;
+  border-radius: 3px;
+  font-weight: 300;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.product {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.product div {
+  display: flex;
+  align-items: center;
+}
+
+.product div input {
+  margin-left: 10px;
+}
+
+.product input {
+  width: 100px;
+}
+
+.overlay {
+  z-index: 88;
+  position: absolute;
+  width: 100%;
+  display: none;
+  background-color: rgba(82, 82, 82, 0.339);
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.overlayForm {
+  background-color: white;
+  color: black;
+  padding: 25px;
+}
+
+.overlayForm a,
+.overlayForm button {
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin: 0 2px;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.overlayButtonsContainer {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.productVoegLijst {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 8px;
+}
+
+.voegProductItem {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  align-items: center;
+}
+
+.voegProductItem > div {
+  display: flex;
+}
+
+.voegProductItem div input {
+  max-width: 50px;
+  margin-left: 5px;
+}
+
+.options {
+  display: flex;
+  margin: 7px 0;
+}
+
+.options p {
+  background-color: rgb(214, 214, 214);
+  padding: 3px 6px;
+  border-radius: 4px;
+  margin: 0 10px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.options .selected {
+  transform: scale(1.1);
+  color: green;
+}
+
+#myDropdownProduct #myInputProduct {
+  font-size: 13px;
+  padding: 5px;
+  margin-bottom: 5px;
+  font-family: "Poppins";
+  width: 100%;
+}
+
+#voegProductAantal {
+  border: 1px solid rgb(203, 203, 203) !important;
+}
+
+.productLijst {
+  display: flex;
+  flex-direction: column;
+  max-height: 400px;
+  padding-right: 10px;
+  overflow-y: scroll;
+  margin-bottom: 15px;
+}

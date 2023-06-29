@@ -92,25 +92,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
+<<<<<<< HEAD
           <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3): ?>
+=======
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3) : ?>
+>>>>>>> 778f682 (push)
             <li onclick="location.href = 'productvoorraad.php'">
               <i class="fa-solid fa-shop"></i>
               <p>Productvoorraad</p>
             </li>
           <?php endif; ?>
+<<<<<<< HEAD
           <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3): ?>
             <li>
+=======
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3) : ?>
+            <li onclick="location.href = 'voedselpakketten.php'">
+>>>>>>> 778f682 (push)
               <i class="fa-solid fa-bag-shopping"></i>
               <p>Voedselpakketten</p>
             </li>
           <?php endif; ?>
+<<<<<<< HEAD
           <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2): ?>
+=======
+          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2) : ?>
+>>>>>>> 778f682 (push)
             <li onclick="location.href = 'leveranciers.php'">
               <i class="fa-solid fa-truck-field"></i>
               <p>Leveranciers</p>
             </li>
           <?php endif; ?>
+<<<<<<< HEAD
           <?php if ($_SESSION['soortgebruiker'] == 1): ?>
+=======
+          <?php if ($_SESSION['soortgebruiker'] == 1) : ?>
+>>>>>>> 778f682 (push)
             <li>
               <i class="fa-solid fa-users"></i>
               <p>Klanten</p>

@@ -1,12 +1,6 @@
 <?php
-session_start();
-if (!isset($_SESSION['soortgebruiker'])) {
-  header("Location: login.php");
-  exit();
-}
 // MySQL database configuration
 require_once 'credentials.php';
-
 
 try {
   // Create a PDO connection
@@ -14,8 +8,7 @@ try {
   $pdo = new PDO($dsn, $username, $password);
 
   // Query to retrieve all rows from the "gebruiker" table
-  $sql = "SELECT *
-  FROM leverancier";
+  $sql = "SELECT voedselpakket.*, klant.id_klant, klant.achternaam, klant.postcode  FROM voedselpakket JOIN klant ON voedselpakket.klant_id = klant.id_klant";
   // Execute the query and fetch all rows
   $result = $pdo->query($sql);
   $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -24,16 +17,15 @@ try {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="./styles/layout.css" />
+  <link rel="stylesheet" href="./styles/productvoorraad.css" />
   <link rel="stylesheet" href="./styles/navbar.css" />
-  <link rel="stylesheet" href="./styles/gebruikers.css" />
+  <link rel="stylesheet" href="./styles/layout.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -46,58 +38,41 @@ try {
   <div class="container">
     <div id="overlay" class="overlay">
       <div class="overlayForm">
-        <h2>Verwijder Leverancier</h2>
-        <p>Weet je zeker dat je deze leverancier wilt verwijderen?</p>
+        <h2>Verwijder Product</h2>
+        <p>Weet je zeker dat je dit product wilt verwijderen?</p>
         <div class="overlayButtonsContainer">
           <a onclick="hideModal()">Nee</a>
-          <button onclick="verwijderLeverancier()" name="modalButton">Ja</button>
+          <button onclick="deleteProduct()" name="modalButton">Ja</button>
         </div>
       </div>
     </div>
     <div class="navbar">
       <h2>Maaskantje Paneel</h2>
       <div class="navbarListContainer">
-      <ul>
+        <ul>
           <li onclick="location.href = 'homepage.php'">
             <i class="fa-solid fa-house"></i>
             <p>Home</p>
           </li>
-<<<<<<< HEAD
-          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3): ?>
-=======
           <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2 || $_SESSION['soortgebruiker'] == 3) : ?>
->>>>>>> 778f682 (push)
             <li onclick="location.href = 'productvoorraad.php'">
               <i class="fa-solid fa-shop"></i>
               <p>Productvoorraad</p>
             </li>
           <?php endif; ?>
-<<<<<<< HEAD
-          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3): ?>
-            <li>
-=======
           <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 3) : ?>
-            <li onclick="location.href = 'voedselpakketten.php'">
->>>>>>> 778f682 (push)
+            <li onclick="location.href = 'voedselpakketten.php'" class="selected">
               <i class="fa-solid fa-bag-shopping"></i>
               <p>Voedselpakketten</p>
             </li>
           <?php endif; ?>
-<<<<<<< HEAD
-          <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2): ?>
-=======
           <?php if ($_SESSION['soortgebruiker'] == 1 || $_SESSION['soortgebruiker'] == 2) : ?>
->>>>>>> 778f682 (push)
-            <li onclick="location.href = 'leveranciers.php'" class="selected">
+            <li onclick="location.href = 'leveranciers.php'">
               <i class="fa-solid fa-truck-field"></i>
               <p>Leveranciers</p>
             </li>
           <?php endif; ?>
-<<<<<<< HEAD
-          <?php if ($_SESSION['soortgebruiker'] == 1): ?>
-=======
           <?php if ($_SESSION['soortgebruiker'] == 1) : ?>
->>>>>>> 778f682 (push)
             <li>
               <i class="fa-solid fa-users"></i>
               <p>Klanten</p>
@@ -124,33 +99,31 @@ try {
     </div>
     <div class="rechts">
       <div class="headerContainer">
-        <h2>Leveranciers</h2>
-        <a href="./voegleverancier.php">Voeg leverancier toe</a>
+        <h2>Voedselpakketten</h2>
+        <a href="./voegvoedselpakket.php">Voeg voedselpakket toe</a>
       </div>
-      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op bedrijfsnaam" onkeyup="searchLeverancier()" />
+      <input type="text" class="zoekInput" id="searchInput" placeholder="Zoek op streepjescode" onkeyup="searchProduct()" />
+
       <table id="productTable">
         <thead>
           <tr>
             <th onclick="sortTable(0)" data-column-index="0">
-              ID<span class="sort-indicator"></span>
+              Pakketnummer<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(1)" data-column-index="1">
-              Bedrijfsnaam<span class="sort-indicator"></span>
+              Datum van samenstelling<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(2)" data-column-index="2">
-              Postcode<span class="sort-indicator"></span>
+              Datum van uitgifte<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(3)" data-column-index="3">
-              Huisnummer<span class="sort-indicator"></span>
+              Postcode levering<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(4)" data-column-index="4">
-              Plaats<span class="sort-indicator"></span>
+              Klant ID<span class="sort-indicator"></span>
             </th>
             <th onclick="sortTable(5)" data-column-index="5">
-              Email<span class="sort-indicator"></span>
-            </th>
-            <th onclick="sortTable(6)" data-column-index="6">
-              Telefoon<span class="sort-indicator"></span>
+              Klant Achternaam<span class="sort-indicator"></span>
             </th>
             <th>Action</th>
           </tr>
@@ -158,64 +131,43 @@ try {
         <tbody>
           <?php if (!empty($rows)) : ?>
             <?php foreach ($rows as $row) : ?>
-              <tr>
-                <td><?php echo $row['id_leverancier']; ?></td>
-                <td><?php echo $row['bedrijfsnaam']; ?></td>
+              <tr onclick="location.href = 'voedselpakket.php?id=<?php echo $row['pakket_nr'] ?>'" data-productid="<?php echo $row['pakket_nr']; ?>">
+                <td><?php echo $row['pakket_nr']; ?></td>
+                <td><?php echo $row['samenstelling']; ?></td>
+                <td><?php echo $row['uitgifte']; ?></td>
                 <td><?php echo $row['postcode']; ?></td>
-                <td><?php echo $row['huisnummer']; ?></td>
-                <td><?php echo $row['plaats']; ?></td>
-                <td><?php echo $row['email']; ?></td>
-                <td><?php echo $row['telefoon']; ?></td>
+                <td><?php echo $row['klant_id']; ?></td>
+                <td><?php echo $row['achternaam']; ?></td>
+
+
                 <td class="actions">
-                  <a href="wijzigleverancier.php?idleverancier=<?php echo $row['id_leverancier'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
-                  <a data-productid="<?php echo $row['id_leverancier']; ?>" onclick="showModal(this)"><i class="fa-solid fa-trash"></i></a>
+                  <a href="wijzigproduct.php?streepjescode=<?php echo $row['streepjescode'] ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a data-productid="<?php echo $row['streepjescode']; ?>" onclick="showModal(this)"><i class="fa-solid fa-trash"></i></a>
                 </td>
               </tr>
             <?php endforeach; ?>
           <?php else : ?>
             <p>No rows found.</p>
           <?php endif; ?>
-
-
-
-
         </tbody>
       </table>
+
+      <script src="script.js"></script>
     </div>
   </div>
   <script>
-    // Zoek Leverancier
-    function searchLeverancier() {
-      let input = document.getElementById("searchInput").value.toLowerCase();
+    let id; // Variable to store the selected product ID
 
-      let rows = document.getElementsByTagName("tr");
 
-      for (let i = 0; i < rows.length; i++) {
-        let row = rows[i];
-        let bedrijfsnaam = row.getElementsByTagName("td")[1];
-
-        if (bedrijfsnaam) {
-          let value = bedrijfsnaam.textContent.toLowerCase();
-
-          if (value.indexOf(input) > -1) {
-            row.style.display = "";
-          } else {
-            row.style.display = "none";
-          }
-        }
-      }
-    }
-
-    let idleverancier;
-
-    function verwijderLeverancier() {
-      window.location.href = 'verwijderleverancier.php?idleverancier=' + idleverancier;
+    function deleteProduct() {
+      // Redirect to deleteproduct.php with the selected product ID
+      window.location.href =
+        "deleteproduct.php?streepjescode=" + streepjescode;
     }
 
     function showModal(button) {
       document.getElementById("overlay").style.display = "flex";
-      idleverancier = button.getAttribute('data-productid');
-
+      streepjescode = button.getAttribute("data-productid");
     }
 
     function hideModal() {
@@ -226,10 +178,8 @@ try {
       if (event.target == modal) {
         modal.style.display = "none";
       }
-    }
+    };
   </script>
-  <script src="script.js"></script>
-
 </body>
 
 </html>

@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 ALTER TABLE voedselbank.klant
 ADD persoonlijkeWens varchar(999);
 
+=======
+ALTER TABLE voedselbank.klant
+ADD persoonlijkeWens varchar(999);
+
+>>>>>>> 778f682 (push)
 Ik heb een extra column toegevoegd aan de database
